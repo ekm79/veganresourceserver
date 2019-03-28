@@ -1,16 +1,12 @@
 package com.veganmichiana.veganguide.controller;
 
-import com.veganmichiana.veganguide.model.MenuItem;
-import com.veganmichiana.veganguide.model.Product;
-import com.veganmichiana.veganguide.model.Restaurant;
-import com.veganmichiana.veganguide.model.Store;
-import com.veganmichiana.veganguide.repository.MenuRepository;
-import com.veganmichiana.veganguide.repository.ProductRepository;
-import com.veganmichiana.veganguide.repository.RestaurantRepository;
-import com.veganmichiana.veganguide.repository.StoreRepository;
+import com.veganmichiana.veganguide.model.*;
+import com.veganmichiana.veganguide.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/admin", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -27,6 +23,14 @@ public class AdminController {
 
     @Autowired
     StoreRepository storeRepo;
+
+    @Autowired
+    UserRepository userRepo;
+
+    @GetMapping("/users")
+    public List<User> getAllUsers () {
+        return userRepo.findAll();
+    }
 
     @PostMapping("/menuitems")
     public MenuItem addMenuItem(@RequestBody MenuItem menuItem) {

@@ -25,4 +25,27 @@ public class StoreController {
     public Store addStore(@RequestBody Store store) {
         return storeRepo.save(store);
     }
+
+    @PutMapping("/stores/{id}")
+    public Store updateStore(@RequestBody Store newStore, @PathVariable long id) {
+        Store store = storeRepo.findById(id).orElseThrow();
+        if (store != null) {
+            newStore.setGroceryid(id);
+            storeRepo.save(newStore);
+            return newStore;
+        } else {
+            return null;
+        }
+    }
+
+    @DeleteMapping("/stores/{id}")
+    public Store deleteStore(@PathVariable long id) {
+        Store store = storeRepo.findById(id).orElseThrow();
+        if (store != null) {
+            storeRepo.delete(store);
+            return store;
+        } else {
+            return null;
+        }
+    }
 }
