@@ -47,12 +47,16 @@ public class SearchController {
         return foundRestaurants;
     }
 
+    @GetMapping("/restaurants/location/{location}")
+    public List<Restaurant> getRestaurantsByLocation(@PathVariable String location) {
+        return restRepo.findRestaurantsByLocationContains(location);
+    }
+
     @GetMapping("/products/{searchterm}")
     public List<Product> findProducts(@PathVariable String searchterm) {
         ArrayList<Product> products = new ArrayList<>();
-        Product foundProduct = productRepo.findProductsByProductnameContains(searchterm);
-        if (foundProduct != null) {
-            products.add(productRepo.findProductsByProductnameContains(searchterm));
+        if (productRepo.findProductsByProductnameContains(searchterm) != null) {
+            products.addAll(productRepo.findProductsByProductnameContains(searchterm));
         } else {
             return null;
         } return products;
